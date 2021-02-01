@@ -1,0 +1,147 @@
+<?xml version="1.0" encording="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <title>Gateway control page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body style="background-color: #212124;">
+<table>
+    <tr>
+        <th rowspan="3"><img src="../static/images/logoSingtel.png" alt="Girl in a jacket"
+                style="width:160px;height:40px;"></th>
+        <th></th>
+        <th colspan="3"> </th>
+    </tr>
+    <tr>
+        <td> </td>
+        <td>
+            <font color=#A0A0A0> <strong> Control : </strong></font>
+        </td>
+        <td><input type="checkbox" id="myCheck" onclick="cbFunction()" checked>
+            <font color=#A0A0A0> Enable Gateway Encryption </font>
+        </td>
+        <td><a href=# id=exchangeKey>
+            
+            <img alt="" src="../static/images/keyExStart.png" 
+            style="height: 30px; width: 50px" board="2" id="imgClickAndChange" onclick="changeImage()"  />
+        
+        </a></td>
+    </tr>
+    <tr>
+        <td> </td>
+        <td>
+            <font color=#A0A0A0> <strong> State : </strong></font>
+        </td>
+        <td>
+            <div class="alert warning">
+                <span class="closebtn">&times;</span>  
+                <strong>Warning!</strong> Gateway feedback exception data.
+              </div>          
+        </td>
+        <td></td>
+    </tr>
+</table>
+<p id="text" style="display:none">Checkbox is CHECKED!</p>
+
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="1"><strong>Gateway ID:</strong></th>
+            <th colspan="1"> Gateway_00 </th>
+            <th> IP address:</th> 
+            <th> 10.10.10.1 </th>
+        </tr>
+        <tr style="vertical-align:top">
+            <td > <strong>Quantum Encryption:</strong> </td>
+            <td colspan="1"> <strong>Gateway Version  : <!--<br> Crypt Mode : --><br> Encryption : <br> Key Exchange : </strong>
+            </td>
+            <td colspan="2"> V1.01_beta  <br><!-- Openssl<br>--> AES-CBC 256 <br> Customized PQC</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="1"> Deployed Time </th>
+            <th> 2020-01-30_09:23:12 </th>
+            <th> GPS Position : </th> 
+            <th> [ 1.2988,103.836 ]</th>
+        </tr>
+        <tr>
+            <td colspan="1">Gateway Computer CPU : </td>
+            <td colspan="1">Intel(R)i7-8700</td>
+            <td colspan="1">Gateway Computer RAM : </td>
+            <td colspan="1">8GB-DDR4 1333Hz</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+    $(function() {
+        // Enable encryption.
+        $('a#enableEncrypt').bind('click', function() {
+        $.getJSON('/enableEncrypt',
+            function(data) {
+            //do nothing
+        });
+        return false;
+        });
+        // Disable encryption
+        $('a#disableEncrypt').bind('click', function() {
+        $.getJSON('/disableEncrypt',
+            function(data) {
+            //do nothing
+        });
+        return false;
+        });
+        // exchange key
+        $('a#exchangeKey').bind('click', function() {
+        $.getJSON('/exchangeKey',
+            function(data) {
+            //do nothing
+        });
+        return false;
+        });
+    });
+
+    function cbFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        text.style.display = "block";
+        $.getJSON('/enableEncrypt',
+            function(data) {
+            //do nothing
+        });
+    } else {
+        text.style.display = "none";
+        $.getJSON('/disableEncrypt',
+            function(data) {
+            //do nothing
+        });
+        }
+    }
+
+    function changeImage() {
+            document.getElementById("imgClickAndChange").src = "../static/images/keyExOn.gif";
+            setTimeout(recoverImage, 3000);
+
+        }
+    function recoverImage() {
+        document.getElementById("imgClickAndChange").src = "../static/images/keyExStart.png";
+    }
+
+
+
+
+</script>
+</body>
+
+</html>
